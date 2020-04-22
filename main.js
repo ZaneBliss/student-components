@@ -75,25 +75,31 @@ const students = [
 
 const studentContainer = document.querySelector("#container");
 
-const createStudentComponent = (object) => {
-    if (object.score >= 60) {
-        return `
-        <div class="student">
-            <h1 class="xx-large passing">${object.name}</h1>
-            <section class="bordered dashed section--padded">${object.subject}</section>
-            <aside class="pushRight">${object.info}</aside>
-        </div>`
-    } else {
-    return `
-        <div class="student">
-            <h1>${object.name}</h1>
-            <section>${object.subject}</section>
-            <aside>${object.info}</aside>
-        </div>`
-    }
-}
+const h1 = (name) => { return `<h1 class="xx-large passing">${name}</h1>` }
+const section = (subject) => { return `<section class="bordered dashed section--padded">${subject}</section>`}
+const aside = (info) => { return `<aside class="pushRight">${info}</aside>` }
 
+const createStudentComponent = (student) => `
+    <div id="student">
+        ${h1(student.name)}
+        ${section(student.subject)}
+        ${aside(student.info)}
+    </div>
+    `
 for (const student of students) {
-    let studentComponent = createStudentComponent(student)
-    studentContainer.innerHTML += studentComponent;
+    let studentComponent = ""
+    if (student.score >= 60) {
+        studentComponent = createStudentComponent(student)
+        studentContainer.innerHTML += studentComponent;
+    }
+    else {
+        studentComponent = `
+        <div class="student">
+            <h1>${student.name}</h1>
+            <section>${student.subject}</section>
+            <aside>${student.info}</aside>
+        </div>
+        ` 
+        studentContainer.innerHTML += studentComponent;
+    }
 }
